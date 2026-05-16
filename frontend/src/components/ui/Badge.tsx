@@ -2,16 +2,16 @@ import React from 'react';
 import { LeadStatus, LeadSource } from '../../types/lead.types';
 
 const statusColors: Record<LeadStatus, string> = {
-  new: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
-  contacted: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-  qualified: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-  lost: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+  new: 'bg-[#3b82f6]/10 text-[#3b82f6] border border-[#3b82f6]/20',
+  contacted: 'bg-[#8b5cf6]/10 text-[#8b5cf6] border border-[#8b5cf6]/20',
+  qualified: 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20',
+  lost: 'bg-red-500/10 text-red-500 border border-red-500/20',
 };
 
 const sourceColors: Record<LeadSource, string> = {
-  website: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
-  instagram: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
-  referral: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200',
+  website: 'bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10',
+  instagram: 'bg-pink-500/10 text-pink-500 border border-pink-500/20',
+  referral: 'bg-indigo-500/10 text-indigo-500 border border-indigo-500/20',
 };
 
 interface BadgeProps {
@@ -24,7 +24,7 @@ export const Badge: React.FC<BadgeProps> = ({ type, value }) => {
     ? statusColors[value as LeadStatus]
     : sourceColors[value as LeadSource];
   return (
-    <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${colorClass}`}>
+    <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-[600] capitalize transition-colors duration-150 ${colorClass}`}>
       {value}
     </span>
   );

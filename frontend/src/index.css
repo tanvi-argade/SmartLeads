@@ -1,15 +1,73 @@
+/* stylelint-disable */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --shimmer-base: theme('colors.gray.100');
+    --shimmer-shine: theme('colors.white');
+  }
+  .dark {
+    --shimmer-base: theme('colors.gray.800');
+    --shimmer-shine: theme('colors.gray.700');
+  }
+  
   body {
-    @apply antialiased text-gray-900 bg-gray-50 transition-colors duration-200;
+    font-family: 'Inter', sans-serif;
+    @apply antialiased text-slate-900 bg-slate-50 transition-colors duration-200;
   }
   
   .dark body {
-    @apply text-gray-100 bg-gray-950;
+    @apply text-white bg-[#05101f];
   }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-in-out forwards;
+}
+.animate-slideInLeft {
+  animation: slideInLeft 0.25s ease-out forwards;
+}
+.animate-slideInRight {
+  animation: slideInRight 0.25s ease-out forwards;
+}
+.animate-scaleIn {
+  animation: scaleIn 0.2s ease-out forwards;
+}
+.shimmer {
+  background: linear-gradient(90deg, 
+    var(--shimmer-base) 25%, 
+    var(--shimmer-shine) 50%, 
+    var(--shimmer-base) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
 }
 
 @layer components {
@@ -18,11 +76,11 @@
   }
   
   .btn-primary {
-    @apply btn bg-indigo-600 text-white hover:bg-indigo-700 shadow-sm hover:shadow-indigo-500/20;
+    @apply btn bg-[#2563eb] text-white hover:bg-[#1d4ed8] shadow-[0_0_24px_rgba(37,99,235,0.3)];
   }
   
   .input-field {
-    @apply w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all;
+    @apply w-full px-4 py-2.5 rounded-[9px] border border-slate-200 dark:border-white/[0.1] bg-slate-100 dark:bg-white/[0.05] outline-none focus:ring-1 focus:ring-[#2563eb]/30 focus:border-[#2563eb] transition-all text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500;
   }
 }
 
@@ -36,5 +94,5 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-200 dark:bg-gray-800 rounded-full hover:bg-gray-300 dark:hover:bg-gray-700;
+  @apply bg-slate-200 dark:bg-white/[0.07] rounded-full hover:bg-slate-300 dark:hover:bg-white/[0.12];
 }

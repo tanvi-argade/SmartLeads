@@ -6,6 +6,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { useAuthStore } from './store/authStore';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import LandingPage from './pages/LandingPage';
 import DashboardPage from './pages/DashboardPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
@@ -28,6 +29,7 @@ const App: React.FC = () => (
         }}
       >
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           
@@ -38,8 +40,7 @@ const App: React.FC = () => (
             <Route path="settings" element={<SettingsPage />} />
           </Route>
 
-          <Route path="/" element={<Navigate to="/dashboard/leads" replace />} />
-          <Route path="*" element={<Navigate to="/dashboard/leads" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" />

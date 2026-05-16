@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import { getLeadsApi, createLeadApi, updateLeadApi, deleteLeadApi, exportLeadsCSVApi } from '../api/leads.api';
 import { LeadFilters as FiltersType, Lead, LeadFormData } from '../types/lead.types';
 import { useDebounce } from '../hooks/useDebounce';
-import { DashboardLayout } from '../components/layout/DashboardLayout';
 import { LeadFilters } from '../components/leads/LeadFilters';
 import { LeadTable } from '../components/leads/LeadTable';
 import { Pagination } from '../components/ui/Pagination';
@@ -112,38 +111,61 @@ const DashboardPage: React.FC = () => {
     }
   };
 
-  return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-      <LeadFilters
-        filters={filters}
-        onChange={(f) => setFilters((prev) => ({ ...prev, ...f }))}
-        onAdd={handleAdd}
-        onExport={exportLeadsCSVApi}
-        searchInput={searchInput}
-        onSearchInput={setSearchInput}
-      />
+  const handleClearFilters = () => {
+    setSearchInput('');
+    setFilters({
+      search: '',
+      status: '',
+      source: '',
+      sortOrder: 'desc',
+      page: 1,
+    });
+  };
 
-      <div className="relative">
-        {isLoading ? (
-          <div className="h-64 flex items-center justify-center">
-            <Spinner size="lg" />
-          </div>
-        ) : (
-          <LeadTable
-            leads={data?.data || []}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onView={handleView}
+  return (
+    <div className="p-6 bg-slate-50 dark:bg-[#05101f] min-h-screen space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-[800] text-slate-900 dark:text-white tracking-tight">Leads Management</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Track and manage your incoming leads in real-time</p>
+        </div>
+      </div>
+
+      <div className="bg-white dark:bg-[#0b1a2e] border border-slate-200 dark:border-white/[0.07] rounded-2xl p-4 shadow-sm">
+        <LeadFilters
+          filters={filters}
+          onChange={(f) => setFilters((prev) => ({ ...prev, ...f }))}
+          onAdd={handleAdd}
+          onExport={exportLeadsCSVApi}
+          searchInput={searchInput}
+          onSearchInput={setSearchInput}
+          onClearFilters={handleClearFilters}
+        />
+      </div>
+
+      <div className="bg-white dark:bg-[#0b1a2e] border border-slate-200 dark:border-white/[0.07] rounded-2xl overflow-hidden shadow-sm">
+        <div className="relative">
+          {isLoading ? (
+            <div className="h-64 flex items-center justify-center">
+              <Spinner size="lg" />
+            </div>
+          ) : (
+            <LeadTable
+              leads={data?.data || []}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onView={handleView}
+            />
+          )}
+        </div>
+
+        {data?.meta && (
+          <Pagination
+            meta={data.meta}
+            onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
           />
         )}
       </div>
-
-      {data?.meta && (
-        <Pagination
-          meta={data.meta}
-          onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
-        />
-      )}
 
       <LeadModal
         isOpen={isModalOpen}
