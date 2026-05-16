@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: leads-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: smart-leads
+    networks:
+      - leads-network
+
+  backend:
+    build: ./backend
+    container_name: leads-backend
+    restart: unless-stopped
+    env_file: ./backend/.env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/smart-leads
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    networks:
+      - leads-network
+
+  frontend:
+    build: ./frontend
+    container_name: leads-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - leads-network
+
+volumes:
+  mongo_data:
+
+networks:
+  leads-network:
+    driver: bridge
