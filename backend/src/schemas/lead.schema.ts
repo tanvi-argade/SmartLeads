@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Types } from 'mongoose';
 
 export const createLeadSchema = z.object({
   body: z.object({
@@ -17,3 +18,12 @@ export const updateLeadSchema = z.object({
     source: z.enum(['website', 'instagram', 'referral']).optional(),
   }),
 });
+
+export interface ILead {
+  _id?: string;
+  name: string;
+  email: string;
+  status: 'new' | 'contacted' | 'qualified' | 'lost';
+  source: 'website' | 'instagram' | 'referral';
+  createdBy: Types.ObjectId;
+}

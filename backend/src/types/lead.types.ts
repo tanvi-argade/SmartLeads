@@ -1,5 +1,6 @@
 export type LeadStatus = 'new' | 'contacted' | 'qualified' | 'lost';
 export type LeadSource = 'website' | 'instagram' | 'referral';
+import { Types } from 'mongoose';
 
 export interface ILead {
   _id: string;
@@ -9,7 +10,7 @@ export interface ILead {
   source: LeadSource;
   createdAt: Date;
   updatedAt: Date;
-  createdBy: string;
+  createdBy: Types.ObjectId;
 }
 
 export interface LeadQueryParams {

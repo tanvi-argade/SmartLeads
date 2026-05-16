@@ -1,7 +1,7 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Schema, Document, Types } from 'mongoose';
 import { ILead } from '../types/lead.types';
 
-export interface ILeadDocument extends Omit<ILead, '_id'>, Document {}
+export interface ILeadDocument extends Omit<ILead, '_id'>, Document { }
 
 const LeadSchema = new Schema<ILeadDocument>(
   {
