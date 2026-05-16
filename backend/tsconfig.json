@@ -9,7 +9,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "Node16",
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src/**/*"
